@@ -4,12 +4,21 @@ using UnityEngine;
 
 public class UnitScript : MonoBehaviour
 {
-    [Header("Unit Action Parameters")]
+    [Header("Unit Stats")]
     [SerializeField]
-    State state = State.Idle;
+    protected int healthPoints = 1;
 
     [SerializeField]
-    UnitScript currentTarget;
+    public float[] elements = new float[Card.elementCount];
+
+    public Card attackCard;
+
+    [Header("Unit Action Parameters")]
+    [SerializeField]
+    protected State state = State.Idle;
+
+    [SerializeField]
+    public UnitScript currentTarget;
 
     [SerializeField]
     float attack_Cooldown;
@@ -26,6 +35,10 @@ public class UnitScript : MonoBehaviour
 
     SpriteRenderer unitSpriteRenderer;
 
+    [Header("Other")]
+    public GameManager gameManager;
+    public UIManager uiManager;
+
     [Header("Sprites")]
     [SerializeField]
     Sprite idleSprite;
@@ -41,19 +54,35 @@ public class UnitScript : MonoBehaviour
     Sprite dodgeSprite;
 
     float timeHolder;
+    float initialCooldowntimeHolder;
     float lastBaseAttackTime = -1;
 
     private void Awake()
     {
         unitSpriteRenderer = GetComponent<SpriteRenderer>();
         timeHolder = Time.timeSinceLevelLoad;
+        initialCooldowntimeHolder = attack_Cooldown;
     }
 
-    private void Update()
+    protected virtual void Start()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+
+    }
+
+    protected virtual void Update()
+    {
+        //element natural degradation
+        for(int i = 0; i < Card.elementCount; i++)
         {
-            Attack();
+            if(elements[i] < 0)
+            {
+                elements[i] = 0;
+            }
+
+            if(elements[i] != 0)
+            {
+                elements[i] -= Time.deltaTime;
+            }
         }
 
         switch(state)
@@ -75,6 +104,7 @@ public class UnitScript : MonoBehaviour
                 {
                     state = State.PostAttack;
                     timeHolder = Time.timeSinceLevelLoad;
+                    currentTarget.ReceiveHit(attackCard);
                 }
                 break;
             case State.PostAttack:
@@ -99,38 +129,117 @@ public class UnitScript : MonoBehaviour
                 }
                 break;
         }
+
+        if(healthPoints <= 0)
+        {
+            OnDeath();
+        }
+
+        if(initialCooldowntimeHolder > 0)
+        {
+            initialCooldowntimeHolder -= Time.deltaTime;
+        }
     }
 
-    public void Attack()
+    public virtual bool Attack()
     {
+        if(currentTarget == null)
+        {
+            Debug.Log("No current target");
+            return false;
+        }
         //attack is still on cooldown
         if(lastBaseAttackTime > 0 && Time.timeSinceLevelLoad - lastBaseAttackTime < attack_Cooldown)
         {
-            Debug.Log("Attack not ready yet");
-            return;
+            //Debug.Log("Attack not ready yet");
+            return false;
         }
 
+        if(initialCooldowntimeHolder > 0)
+        {
+            return false;
+        }
+
+        Debug.Log(transform.name + " attacks " + currentTarget.transform.name + " with " + attackCard);
         state = State.PreAttack;
         timeHolder = Time.timeSinceLevelLoad;
         lastBaseAttackTime = Time.timeSinceLevelLoad;
+
+        return true;
     }
 
-    public void ReceiveHit()
+    public void ReceiveHit(Card card = null)
     {
+        if(card == null)
+        {
+            return;
+        }
+
         //if hit is successful
         if(true)
         {
             state = State.Hit;
             timeHolder = Time.timeSinceLevelLoad;
-            Debug.Log(transform.name + " was hit!");
+
+            //effects from the card
+            for(int i = 0; i < Card.elementCount; i++)
+            {
+                elements[i] += card.adds[i];
+
+                if(elements[i] < 0)
+                {
+                    elements[i] = 0;
+                }
+            }
+
+            int damage = 0;
+
+            for (int i = 0; i < Card.elementCount; i++)
+            {
+                damage += (int)Mathf.Ceil(elements[i]) * card.dmgPer[i];
+            }
+
+            healthPoints -= damage;
+
+            Debug.Log(transform.name + " received " + damage + " damage!");
+
+            if(card.ingredients != null)
+            {
+                //special effects from card
+                foreach (var item in card.ingredients)
+                {
+                    item.Effect(this);
+                }
+            }
         }
         //dodged attack
         else
         {
+            /*
             state = State.Dodge;
             timeHolder = Time.timeSinceLevelLoad;
             Debug.Log(transform.name + " dodged the attack!");
+            */
         }
+    }
+
+    protected virtual void OnDeath()
+    {
+        Debug.Log(transform.name + " has been defeated!");
+    }
+
+    public override string ToString()
+    {
+        string output = "";
+
+        output += transform.name + "\n";
+        output += "HP: " + healthPoints + "\n";
+        output += "Red: " + (int)Mathf.Ceil(elements[0]) + "\n";
+        output += "Blue: " + (int)Mathf.Ceil(elements[1]) + "\n";
+        output += "Black: " + (int)Mathf.Ceil(elements[2]) + "\n";
+        output += "White: " + (int)Mathf.Ceil(elements[3]);
+
+        return output;
     }
 }
 
