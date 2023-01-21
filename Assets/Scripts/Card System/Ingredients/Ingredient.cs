@@ -16,7 +16,7 @@ public class Ingredient : ScriptableObject
     public float[] multiplies = new float[Card.elementCount];
     public int[] dmgPer = new int[Card.elementCount];
 
-    public virtual void Effect(UnitScript target = null)
+    public virtual void Effect(UnitScript user, UnitScript target = null)
     {
         return;
     }

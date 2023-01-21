@@ -302,7 +302,7 @@ public class UIManager : MonoBehaviour
     public void EnterEndOfCombatMenu()
     {
         playerScript.ReturnHandToDeck();
-
+        rewardChoiceButtons.gameObject.SetActive(true);
         endOfCombatCanvas.gameObject.SetActive(true);
         combatCanvas.gameObject.SetActive(false);
     }
@@ -313,8 +313,16 @@ public class UIManager : MonoBehaviour
         combatCanvas.gameObject.SetActive(true);
     }
 
-    public void ChooseReward(int num)
+    public void UpdateRewardSelectionUI(List<Ingredient> options)
     {
+        for(int i = 0; i < rewardChoiceButtons.childCount; i++)
+        {
+            rewardChoiceButtons.GetChild(i).GetChild(0).GetComponent<TMP_Text>().text = options[i].ToString();
+        }
+    }
 
+    public void HideRewardSelectionUI()
+    {
+        rewardChoiceButtons.gameObject.SetActive(false);
     }
 }

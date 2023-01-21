@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * To do list:
+ * Rewards choice should not pick the same ingredient more than once
+ * Card crafting UI should update deck after confirm button is pressed
+ * Implement ingredient count limit & appropriate UI
+ * Status effects. The ones that are confirmed first: Stun (cant do anything), Elemental Lock (element does not decay), Vulnerability (x2 damage) 
+ */
 public class GameManager : MonoBehaviour
 {
     public List<UnitScript> enemiesOnScreen;
@@ -21,9 +28,11 @@ public class GameManager : MonoBehaviour
     [Header("Ingredients")]
     [SerializeField]
     List<Ingredient> ingredientDB;
+    List<Ingredient> rewardOptions;
 
     private void Start()
     {
+
     }
 
     private void Update()
@@ -41,21 +50,17 @@ public class GameManager : MonoBehaviour
             state = GameState.EndOfCombat;
 
             playerScript.ReturnHandToDeck();
+
+            //show rewards menu
+            GenerateRewardOptions(3);
+            uIManager.UpdateRewardSelectionUI(rewardOptions);
+
         }
     }
 
     public GameState GetGameState()
     {
         return state;
-    }
-
-    //pick a random ingredient to get for clearing rooms
-    //parameter is how many options. default to 3
-    public List<Ingredient> GenerateRoomClearRewardOptions(int count = 3)
-    {
-        List<Ingredient> output = new List<Ingredient>();
-
-        return output;
     }
 
     //load appropriate canvases and instantiate enemies, put their references in the onscreen enemy list, assign appropriate references
@@ -83,6 +88,27 @@ public class GameManager : MonoBehaviour
 
             enemiesOnScreen.Add(newentry);
         }
+    }
+
+    public void ChooseCombatReward(int choice)
+    {
+        playerScript.AddInventoryIngredient(rewardOptions[choice]);
+        uIManager.HideRewardSelectionUI();
+    }
+
+    //pick a random ingredient to get for clearing rooms
+    //parameter is how many options. default to 3
+    void GenerateRewardOptions(int count = 3)
+    {
+        List<Ingredient> output = new List<Ingredient>();
+
+        for(int i = 0; i < count; i++)
+        {
+            int randomint = Random.Range(0, ingredientDB.Count);
+            output.Add(ingredientDB[randomint]);
+        }
+
+        rewardOptions = output;
     }
 }
 

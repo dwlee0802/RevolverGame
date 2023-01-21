@@ -727,14 +727,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 1620813379}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ChooseCombatReward
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1663,14 +1663,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 1620813379}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ChooseCombatReward
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2580,13 +2580,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 1620813379}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ChooseCombatReward
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -8303,7 +8303,7 @@ MonoBehaviour:
   craftingMenuCanvas: {fileID: 718949655}
   combatCanvas: {fileID: 1588864680}
   endOfCombatCanvas: {fileID: 1842576273}
-  rewardChoiceButtons: {fileID: 0}
+  rewardChoiceButtons: {fileID: 106606221}
   cardEntryPrefab: {fileID: 5581989242090729724, guid: 43d1976fd260a5d4cb1376637da84ca7, type: 3}
   ingredientEntryPrefab: {fileID: 4004553099954092040, guid: 557af37dcc71aa84293e022640dd2d48, type: 3}
   selectedCardEntry: {fileID: 0}
@@ -8343,7 +8343,19 @@ MonoBehaviour:
   ratAttackCardIngredients:
   - {fileID: 11400000, guid: 70b57d4004ead1e4585d0c6fc77f0735, type: 2}
   - {fileID: 11400000, guid: 43e5de1bc97e0b549ac48a743ec4f352, type: 2}
-  ingredientDB: []
+  ingredientDB:
+  - {fileID: 11400000, guid: 70b57d4004ead1e4585d0c6fc77f0735, type: 2}
+  - {fileID: 11400000, guid: 43e5de1bc97e0b549ac48a743ec4f352, type: 2}
+  - {fileID: 11400000, guid: e05de8b4ccd404c4d988c8a3f8662a3c, type: 2}
+  - {fileID: 11400000, guid: ae656d9f2dad59044aaea0dd61b316d3, type: 2}
+  - {fileID: 11400000, guid: 4a053491bd51391408de0ba955517717, type: 2}
+  - {fileID: 11400000, guid: b99d4633d1bcc2944b2b74b895aa985c, type: 2}
+  - {fileID: 11400000, guid: 326d065d18c571947ada015e8a0938a1, type: 2}
+  - {fileID: 11400000, guid: 0f1a31caeee5856499ba770c85fff657, type: 2}
+  - {fileID: 11400000, guid: c54b2910354d75d479ae1ad103a3f20a, type: 2}
+  - {fileID: 11400000, guid: 886d334068076b54180108434d8a77d7, type: 2}
+  - {fileID: 11400000, guid: d41511eb960c23a45814429e5490efb6, type: 2}
+  - {fileID: 11400000, guid: ec3c397e2b7c21240b3d3921dda18530, type: 2}
 --- !u!1 &1630059560
 GameObject:
   m_ObjectHideFlags: 0

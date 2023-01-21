@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7cb775b51768d1043bf01ecc74b1be0d, type: 3}
-  m_Name: b1
+  m_Name: cd2
   m_EditorClassIdentifier: 
-  ingredientName: b1
+  ingredientName: cd1
   count: 0
-  adds: 00000000010000000000000000000000
+  adds: 00000000000000000000000000000000
   multiplies:
   - 1
   - 1
   - 1
   - 1
-  dmgPer: 00000000000000000000000000000000
+  dmgPer: 00000000000000000200000000000000

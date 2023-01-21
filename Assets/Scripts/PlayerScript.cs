@@ -207,4 +207,11 @@ public class PlayerScript : UnitScript
     {
         return ingredientInventory.Count;
     }
+
+    public override void ReceiveHit(Card card = null)
+    {
+        base.ReceiveHit(card);
+
+        uiManager.UpdatePlayerInfo(this);
+    }
 }

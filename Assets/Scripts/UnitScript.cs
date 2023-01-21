@@ -168,12 +168,14 @@ public class UnitScript : MonoBehaviour
         return true;
     }
 
-    public void ReceiveHit(Card card = null)
+    public virtual void ReceiveHit(Card card = null)
     {
         if(card == null)
         {
             return;
         }
+
+        //calculate damage
 
         //if hit is successful
         if(true)
@@ -208,7 +210,7 @@ public class UnitScript : MonoBehaviour
                 //special effects from card
                 foreach (var item in card.ingredients)
                 {
-                    item.Effect(this);
+                    item.Effect(this, currentTarget);
                 }
             }
         }
